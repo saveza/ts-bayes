@@ -25,32 +25,32 @@ export class Bayes implements ClassifierOptions {
     public vocabulary: Map<boolean>;
 
     /** Naive-Bayes Classifier that uses Laplace Smoothing. */
-    constructor(options?: ClassifierOptions) {
+    constructor(classifier?: Bayes, options?: ClassifierOptions) {
         // set options object
         this.options = options || {};
 
         this.tokenizer = this.options.tokenizer || Bayes.defaultTokenizer;
 
         // initialize our vocabulary and its size
-        this.vocabulary = {};
-        this.vocabularySize = 0;
+        this.vocabulary = classifier ? classifier.vocabulary : {};
+        this.vocabularySize = classifier ? classifier.vocabularySize : 0;
 
         // number of documents we have learned from
-        this.totalDocuments = 0;
+        this.totalDocuments = classifier ? classifier.totalDocuments : 0;
 
         // document frequency table for each of our categories
         // => for each category, how often were documents mapped to it
-        this.docCount = {};
+        this.docCount = classifier ? classifier.docCount : {};
 
         // for each category, how many words total were mapped to it
-        this.wordCount = {};
+        this.wordCount = classifier ? classifier.wordCount : {};
 
         // word frequency table for each category
         // => for each category, how frequent was a given word mapped to it
-        this.wordFrequencyCount = {};
+        this.wordFrequencyCount = classifier ? classifier.wordFrequencyCount : {};
 
         // hashmap of our category names
-        this.categories = {};
+        this.categories = classifier ? classifier.categories : {};
     }
 
     /**
@@ -209,14 +209,14 @@ export class Bayes implements ClassifierOptions {
     /** Initializes a Bayes instance from a JSON state representation.
      * Use this with classifier.toJson(). */
     static fromJson(jsonStr: string) {
-        var parsed: SerializedClassifier;
+        var parsed: Bayes;
         try {
             parsed = JSON.parse(jsonStr);
         } catch (e) {
             throw new Error("bayes.fromJson expects a valid JSON string.");
         }
         // init a new classifier
-        var classifier = new Bayes(parsed.options);
+        var classifier = new Bayes(parsed, parsed.options);
         return classifier;
     }
 
