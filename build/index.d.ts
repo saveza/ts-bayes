@@ -29,7 +29,7 @@ export declare class Bayes implements ClassifierOptions {
     tokenizer: Tokenizer;
     vocabulary: Map<boolean>;
     /** Naive-Bayes Classifier that uses Laplace Smoothing. */
-    constructor(options?: ClassifierOptions);
+    constructor(classifier?: Bayes, options?: ClassifierOptions);
     /**
      * Initialize each of our data structure entries for this new category
      *

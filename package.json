@@ -26,6 +26,6 @@
   },
   "homepage": "https://github.com/RickCarlino/ts-bayes",
   "dependencies": {
-    "typescript": "^2.0.9"
+    "typescript": "^2.9.2"
   }
 }
