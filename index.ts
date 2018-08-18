@@ -175,7 +175,7 @@ export class Bayes implements ClassifierOptions {
                 }
             });
 
-        categoryResults.categoryResults = categoryResults.categoryResults.sort((n1,n2) => n1.probability - n2.probability);
+        categoryResults.categoryResults = categoryResults.categoryResults.sort((n1,n2) => n2.probability - n1.probability);
         return categoryResults;
     }
 

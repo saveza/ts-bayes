@@ -1,6 +1,6 @@
 {
   "name": "ts-bayes",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Naive-bayes classifier that uses Laplace Smoothing. Port of Tolga Tezel's `bayes` module to Typescript.",
   "scripts": {
     "start": "rm -rf build/; tsc"
