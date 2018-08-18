@@ -132,6 +132,7 @@ var Bayes = /** @class */ (function () {
                 categoryResults.probability = logProbability;
             }
         });
+        categoryResults.categoryResults = categoryResults.categoryResults.sort(function (n1, n2) { return n1.probability - n2.probability; });
         return categoryResults;
     };
     /**
