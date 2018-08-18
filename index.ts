@@ -12,6 +12,15 @@ export interface ClassifierOptions {
     tokenizer?: Tokenizer;
     vocabulary?: Map<boolean>;
 }
+export class CategoryResults {
+    chosenCategory: string;
+    probability: number;
+    categoryResults: CategoryResult[] = [];
+}
+export class CategoryResult {
+    constructor(public name: string,
+                public probability: number) {}
+}
 export class Bayes implements ClassifierOptions {
 
     public docCount: Map<number> = {};
@@ -119,7 +128,8 @@ export class Bayes implements ClassifierOptions {
     }
 
     /** Determine what category `text` belongs to. */
-    categorize(text: string) {
+    categorize(text: string): CategoryResults {
+        const categoryResults = new CategoryResults();
         var chosenCategory: string | undefined;
         var self = this
             , maxProbability = -Infinity;
@@ -155,13 +165,17 @@ export class Bayes implements ClassifierOptions {
                         logProbability += frequencyInText * c;
                     });
 
+                const categoryResult = new CategoryResult(category, logProbability);
+                categoryResults.categoryResults.push(categoryResult);
+
                 if (logProbability > maxProbability) {
                     maxProbability = logProbability;
-                    chosenCategory = category;
+                    categoryResults.chosenCategory = category;
+                    categoryResults.probability = logProbability;
                 }
             });
 
-        return chosenCategory;
+        return categoryResults;
     }
 
 

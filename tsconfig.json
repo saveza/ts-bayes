@@ -10,7 +10,8 @@
         "types": []
     },
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "./build"
     ],
     "compileOnSave": false,
     "buildOnSave": false

@@ -1,5 +1,20 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
+var CategoryResults = /** @class */ (function () {
+    function CategoryResults() {
+        this.categoryResults = [];
+    }
+    return CategoryResults;
+}());
+exports.CategoryResults = CategoryResults;
+var CategoryResult = /** @class */ (function () {
+    function CategoryResult(name, probability) {
+        this.name = name;
+        this.probability = probability;
+    }
+    return CategoryResult;
+}());
+exports.CategoryResult = CategoryResult;
 var Bayes = /** @class */ (function () {
     /** Naive-Bayes Classifier that uses Laplace Smoothing. */
     function Bayes(classifier, options) {
@@ -82,6 +97,7 @@ var Bayes = /** @class */ (function () {
     };
     /** Determine what category `text` belongs to. */
     Bayes.prototype.categorize = function (text) {
+        var categoryResults = new CategoryResults();
         var chosenCategory;
         var self = this, maxProbability = -Infinity;
         var tokens = self.tokenizer(text);
@@ -108,12 +124,15 @@ var Bayes = /** @class */ (function () {
                 var c = Math.log(tokenProbability);
                 logProbability += frequencyInText * c;
             });
+            var categoryResult = new CategoryResult(category, logProbability);
+            categoryResults.categoryResults.push(categoryResult);
             if (logProbability > maxProbability) {
                 maxProbability = logProbability;
-                chosenCategory = category;
+                categoryResults.chosenCategory = category;
+                categoryResults.probability = logProbability;
             }
         });
-        return chosenCategory;
+        return categoryResults;
     };
     /**
      * Calculate probability that a `token` belongs to a `category`

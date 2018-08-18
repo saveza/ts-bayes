@@ -18,6 +18,16 @@ export interface ClassifierOptions {
     tokenizer?: Tokenizer;
     vocabulary?: Map<boolean>;
 }
+export declare class CategoryResults {
+    chosenCategory: string;
+    probability: number;
+    categoryResults: CategoryResult[];
+}
+export declare class CategoryResult {
+    name: string;
+    probability: number;
+    constructor(name: string, probability: number);
+}
 export declare class Bayes implements ClassifierOptions {
     docCount: Map<number>;
     wordCount: Map<number>;
@@ -42,7 +52,7 @@ export declare class Bayes implements ClassifierOptions {
      */
     learn(text: string, category: string): this;
     /** Determine what category `text` belongs to. */
-    categorize(text: string): string | undefined;
+    categorize(text: string): CategoryResults;
     /**
      * Calculate probability that a `token` belongs to a `category`
      *
